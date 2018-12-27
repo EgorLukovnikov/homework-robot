@@ -8,6 +8,7 @@ import { ShoulderModel } from './../components/shoulder.model';
 import { HeadModel } from './../components/head.model';
 import { LegModel } from './../components/leg.model';
 import { TorsoModel } from './../components/torso.model';
+import { BulletModel } from './../components/bullet.model';
 
 export class RobotModel extends UnitModel implements Flyable, Defensible {
 	protected view: View = {
@@ -21,6 +22,7 @@ export class RobotModel extends UnitModel implements Flyable, Defensible {
 	private moveDelay = 100;
 
 	private shoulderLeft = new ShoulderModel();
+	private bullet: BulletModel;
 
 	constructor() {
 		super();
@@ -94,10 +96,25 @@ export class RobotModel extends UnitModel implements Flyable, Defensible {
 			},
 			unit: torso
 		});
+
+		this.children.push({
+			view: {
+				'background-image': 'url(i/22.png)',
+				'background-position': '0 0',
+				width: 25,
+				height: 7,
+				top: 11,
+				left: 162,
+				opacity: 0
+			},
+			unit: new BulletModel()
+		});
+		this.bullet = this.children[this.children.length-1];
+
 	}
 
 	shot() {
-		this.shoulderLeft.shot();
+		this.shoulderLeft.shot(this.bullet);
 	}
 
 	forward() {

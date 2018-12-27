@@ -26,7 +26,7 @@ export class ShoulderModel extends UnitModel {
 		});
 	}
 
-	shot() {
+	shot(bullet) {
 		clearInterval(this.interval);
 
 		const rotateZTo = 90;
@@ -35,6 +35,11 @@ export class ShoulderModel extends UnitModel {
 		let rotateZ = 11;
 
 		this.interval = setInterval(() => {
+			if (rotateZ === 90){
+				bullet.view.opacity = 1;
+				bullet.unit.fly(bullet);
+			}
+
 			if(rotateZ === 10) {
 				this.view.transform = 'rotateZ('+ 10 +'deg)';
 				clearInterval(this.interval);
@@ -55,6 +60,8 @@ export class ShoulderModel extends UnitModel {
 			}
 		}, delay / rotateZTo);
 	}
+
+
 
 	addWeapon() {
 		const weapon = new WeaponModel();
